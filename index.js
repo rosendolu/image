@@ -1,4 +1,5 @@
 const fs = require('fs');
+// const gm = require('gm').subClass({ imageMagick: true });
 const gm = require('gm');
 const path = require('path');
 const { log } = console;
@@ -26,21 +27,29 @@ const compressor = (dir) => {
 					}
 				} else {
 					if (stat.isFile() && /\.(png|svg|jpg|jpeg|gif)$/.test(item)) {
-						log(item);
-						// log(path.parse(itemDir));
-						// log(path.delimiter);
-						// resize and remove EXIF profile data
-						// .resize(240, 240)
+						// log(item);
 						let pathObj = path.parse(itemDir);
+						// 压缩处理
+						// .compress()
 						gm(itemDir)
-							.noProfile()
+							.autoOrient()
+							.quality(60)
+							.strip()
 							.write(pathObj.dir + '/gm_' + pathObj.base, (err) => {
 								if (err) {
 									log(err);
-									return;
 								}
 								log(itemDir);
 							});
+						// gm(itemDir)
+						// 	.compress()
+						// 	.write(pathObj.dir + '/gm_' + pathObj.base, (err) => {
+						// 		if (err) {
+						// 			log(err);
+						// 			return;
+						// 		}
+						// 		log(itemDir);
+						// 	});
 					}
 				}
 			});
