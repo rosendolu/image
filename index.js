@@ -2,7 +2,9 @@ const fs = require('fs');
 // const gm = require('gm').subClass({ imageMagick: true });
 const gm = require('gm');
 const path = require('path');
+const chalk = require('chalk');
 const { log } = console;
+
 const DIR = './';
 const ignoredDir = ['node_modules', '.git', '.vscode'];
 
@@ -33,13 +35,13 @@ const compressor = (dir) => {
 						// .compress()
 						gm(itemDir)
 							.autoOrient()
-							.quality(60)
+							.quality(70)
 							.strip()
 							.write(pathObj.dir + '/gm_' + pathObj.base, (err) => {
 								if (err) {
-									log(err);
+									log(chalk.red(err));
 								}
-								log(itemDir);
+								log(chalk.bgCyan(itemDir));
 							});
 						// gm(itemDir)
 						// 	.compress()
